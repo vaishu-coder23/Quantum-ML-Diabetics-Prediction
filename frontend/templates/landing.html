@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Health AI | Intelligent Diabetes Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-teal: #2dd4bf;
+            --primary-blue: #38bdf8;
+            --gradient-med: linear-gradient(135deg, var(--primary-teal) 0%, var(--primary-blue) 100%);
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --bg-light: #f8fafc;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            box-sizing: border-box;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient-med);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-teal);
+        }
+
+        .btn-portal {
+            background: var(--gradient-med);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(45, 212, 191, 0.3);
+        }
+
+        .btn-portal:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(45, 212, 191, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 160px 50px 100px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            letter-spacing: -1px;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .blob-bg {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: var(--primary-teal);
+            filter: blur(150px);
+            opacity: 0.15;
+            border-radius: 50%;
+            top: 50px;
+            right: 0;
+            z-index: -1;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 50px;
+            background: white;
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 60px auto 0;
+        }
+
+        .feature-card {
+            background: var(--bg-light);
+            padding: 40px 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-med);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="blob-bg"></div>
+
+    <nav class="navbar">
+        <a href="/" class="logo">QuantumHealth</a>
+        <div class="nav-links">
+            <a href="#features" class="nav-link">Features</a>
+            <a href="#about" class="nav-link">About Hybrid AI</a>
+            <a href="/auth" class="btn-portal">Patient Portal</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Next-Generation <br><span
+                    style="background: var(--gradient-med); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Diabetes
+                    Care</span></h1>
+            <p>Empowering you with Quantum-Classical Hybrid Machine Learning and cutting-edge GenAI. Predict risks
+                accurately, analyze lab reports instantly, and get personalized continuous care.</p>
+            <a href="/auth" class="btn-portal" style="font-size: 1.2rem; padding: 15px 35px;">Access Dashboard</a>
+        </div>
+        <div class="hero-image" style="position: relative;">
+            <div
+                style="background: white; padding: 30px; border-radius: 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.1); border: 1px solid rgba(45, 212, 191, 0.2);">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                    <h3 style="margin:0; color: #0f172a;">Risk Assessment</h3>
+                    <span
+                        style="background: #ecfdf5; color: #10b981; padding: 5px 12px; border-radius: 20px; font-weight: 600; font-size: 0.8rem;">Live
+                        Engine</span>
+                </div>
+                <div
+                    style="height: 150px; background: #f1f5f9; border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
+                    <!-- Abstract visualization representation -->
+                    <div style="width: 80%; height: 2px; background: #cbd5e1; position: absolute;"></div>
+                    <div
+                        style="width: 40%; height: 2px; background: var(--primary-teal); position: absolute; left: 10%;">
+                    </div>
+                    <div
+                        style="width: 20px; height: 20px; background: var(--primary-blue); border-radius: 50%; box-shadow: 0 0 15px var(--primary-blue); position: absolute; left: 50%;">
+                    </div>
+                </div>
+                <div
+                    style="background: #f8fafc; padding: 15px; border-radius: 12px; font-size: 0.9rem; color: #64748b;">
+                    <strong style="color: #0f172a;">Hybrid Confidence:</strong> 94.2% <br>
+                    <strong style="color: #0f172a;">Status:</strong> System Optimal
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="features" class="features">
+        <h2 style="font-size: 2.5rem; margin-bottom: 15px;">Intelligent Health Ecosystem</h2>
+        <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">Our platform combines
+            multiple advanced AI paradigms to bring you comprehensive healthcare monitoring.</p>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🧬</div>
+                <h3>Hybrid Prediction Engine</h3>
+                <p>Combines Classical Random Forests with Quantum Support Vector Classifiers (QSVC) for unprecedented
+                    accuracy in diabetes risk onset prediction.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📑</div>
+                <h3>Gemini Lab Analysis</h3>
+                <p>Upload your medical reports and let our Multimodal Gemini 2.5 Engine read, summarize, and explain
+                    your lab results in plain English.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>Empathetic AI Advisor</h3>
+                <p>Context-aware personalized Chatbot that remembers your health trajectory and suggests tailored
+                    lifestyle, diet, and minor medical adjustments.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <h2 style="margin: 0 0 10px;">QuantumHealth</h2>
+        <p style="opacity: 0.6; margin: 0; font-size: 0.9rem;">Elevating personalized healthcare through Quantum
+            Intelligence.</p>
+    </footer>
+
+</body>
+
+</html>

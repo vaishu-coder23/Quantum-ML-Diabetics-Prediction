@@ -1,0 +1,15 @@
+flask
+pandas
+numpy
+scikit-learn
+qiskit
+qiskit-machine-learning
+easyocr
+reportlab
+matplotlib
+opencv-python-headless
+sqlalchemy
+joblib
+python-dotenv
+shap
+lime

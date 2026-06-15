@@ -1,0 +1,40 @@
+</div>
+</main>
+</div>
+
+<!-- External Logic -->
+<script src="/static/js/main.js"></script>
+
+<script>
+    // Core Module Switching logic (kept in template for speed)
+    function showModule(mid) {
+        // Hide all modules
+        document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+        // Remove active state from nav
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+        // Show target module
+        const target = document.getElementById(mid + '-module');
+        if (target) target.classList.add('active');
+
+        // Update title
+        const titles = {
+            'predict': 'Risk Prediction',
+            'analysis': 'Lab Analysis',
+            'reminders': 'Medical Log',
+            'chat': 'AI Health Advisor',
+            'consult': 'Consultations',
+            'profile': 'My Profile'
+        };
+        document.getElementById('module-title').innerText = titles[mid];
+
+        // Update sidebar active state
+        const navItems = document.querySelectorAll('.nav-item');
+        const modules = ['predict', 'analysis', 'reminders', 'chat', 'consult', 'profile'];
+        const idx = modules.indexOf(mid);
+        if (idx !== -1 && navItems[idx]) navItems[idx].classList.add('active');
+    }
+</script>
+</body>
+
+</html>

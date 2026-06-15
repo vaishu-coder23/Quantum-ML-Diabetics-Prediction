@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Health | Secure Bio-Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        body {
+            background: radial-gradient(circle at top right, #e0e7ff, #f8fafc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            color: #1e293b;
+        }
+
+        .auth-container {
+            width: 400px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            z-index: 10;
+        }
+
+        .auth-tabs {
+            display: flex;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 5px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 500;
+            color: #64748b;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #2dd4bf 0%, #38bdf8 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(45, 212, 191, 0.4);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .input-box {
+            position: relative;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 12px 15px;
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            color: #1e293b;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .input-box input:focus {
+            border-color: #2dd4bf;
+            background: white;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.2);
+        }
+
+        .brand-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #2dd4bf 0%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .bg-blob {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: #2dd4bf;
+            filter: blur(150px);
+            opacity: 0.15;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .blob-1 {
+            top: -100px;
+            right: -100px;
+        }
+
+        .blob-2 {
+            bottom: -100px;
+            left: -100px;
+            background: #38bdf8;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2dd4bf 0%, #38bdf8 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        .btn-google {
+            background: white;
+            color: #475569;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 15px;
+            text-decoration: none;
+        }
+
+        .btn-google:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+
+    <div class="auth-container">
+        <h1 class="brand-logo">QuantumHealth</h1>
+        <p style="margin-bottom: 30px; opacity: 0.7;">Intelligent Diabetes Management</p>
+
+        <div class="auth-tabs">
+            <div class="tab active" onclick="switchTab('login')">Login</div>
+            <div class="tab" onclick="switchTab('signup')">Sign Up</div>
+            <div class="tab" onclick="switchTab('doctor')">Doctor</div>
+            <div class="tab" onclick="switchTab('admin')">Admin</div>
+        </div>
+
+        <div id="login-form" class="auth-form active">
+            <div class="input-box">
+                <label>Username</label>
+                <input type="text" id="login-user" placeholder="Enter username">
+            </div>
+            <div class="input-box">
+                <label>Password</label>
+                <input type="password" id="login-pass" placeholder="Enter password">
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 10px;" onclick="handleLogin()">Access
+                Dashboard</button>
+            <div style="margin: 20px 0; display: flex; align-items: center; justify-content: center; gap: 10px; color: #94a3b8; font-size: 0.9rem;">
+                <hr style="flex: 1; border: none; border-top: 1px solid rgba(0,0,0,0.1);">
+                <span>OR</span>
+                <hr style="flex: 1; border: none; border-top: 1px solid rgba(0,0,0,0.1);">
+            </div>
+            <a href="/google_login" class="btn-google">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.56 12.25C22.56 11.47 22.49 10.72 22.36 10H12V14.26H17.92C17.66 15.63 16.88 16.81 15.7 17.59V20.34H19.26C21.34 18.42 22.56 15.6 22.56 12.25Z" fill="#4285F4"/>
+                    <path d="M12 23C14.97 23 17.46 22.02 19.26 20.34L15.7 17.59C14.73 18.24 13.46 18.66 12 18.66C9.17 18.66 6.78 16.75 5.92 14.18H2.24V17.03C4.04 20.6 7.7 23 12 23Z" fill="#34A853"/>
+                    <path d="M5.92 14.18C5.7 13.52 5.58 12.78 5.58 12.01C5.58 11.24 5.7 10.5 5.92 9.84V6.99H2.24C1.49 8.48 1.07 10.18 1.07 12.01C1.07 13.84 1.49 15.54 2.24 17.03L5.92 14.18Z" fill="#FBBC05"/>
+                    <path d="M12 5.38C13.62 5.38 15.06 5.94 16.2 7.03L19.34 3.89C17.45 2.13 14.97 1.05 12 1.05C7.7 1.05 4.04 3.45 2.24 6.99L5.92 9.84C6.78 7.27 9.17 5.38 12 5.38Z" fill="#EA4335"/>
+                </svg>
+                Continue with Google
+            </a>
+        </div>
+
+        <div id="signup-form" class="auth-form">
+            <div class="input-box">
+                <label>Full Name</label>
+                <input type="text" id="reg-name" placeholder="John Doe">
+            </div>
+            <div class="input-box">
+                <label>Username</label>
+                <input type="text" id="reg-user" placeholder="Create username">
+            </div>
+            <div class="input-box">
+                <label>Email</label>
+                <input type="email" id="reg-email" placeholder="email@example.com">
+            </div>
+            <div class="input-box" style="margin-bottom: 20px;">
+                <label>Phone Number (for SMS Alerts)</label>
+                <input type="text" id="reg-phone" placeholder="+1234567890">
+            </div>
+            <div class="input-box">
+                <label>Password</label>
+                <input type="password" id="reg-pass" placeholder="Min 8 characters">
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 10px;" onclick="handleSignup()">Create
+                Account</button>
+            <div style="margin: 20px 0; display: flex; align-items: center; justify-content: center; gap: 10px; color: #94a3b8; font-size: 0.9rem;">
+                <hr style="flex: 1; border: none; border-top: 1px solid rgba(0,0,0,0.1);">
+                <span>OR</span>
+                <hr style="flex: 1; border: none; border-top: 1px solid rgba(0,0,0,0.1);">
+            </div>
+            <a href="/google_login" class="btn-google">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.56 12.25C22.56 11.47 22.49 10.72 22.36 10H12V14.26H17.92C17.66 15.63 16.88 16.81 15.7 17.59V20.34H19.26C21.34 18.42 22.56 15.6 22.56 12.25Z" fill="#4285F4"/>
+                    <path d="M12 23C14.97 23 17.46 22.02 19.26 20.34L15.7 17.59C14.73 18.24 13.46 18.66 12 18.66C9.17 18.66 6.78 16.75 5.92 14.18H2.24V17.03C4.04 20.6 7.7 23 12 23Z" fill="#34A853"/>
+                    <path d="M5.92 14.18C5.7 13.52 5.58 12.78 5.58 12.01C5.58 11.24 5.7 10.5 5.92 9.84V6.99H2.24C1.49 8.48 1.07 10.18 1.07 12.01C1.07 13.84 1.49 15.54 2.24 17.03L5.92 14.18Z" fill="#FBBC05"/>
+                    <path d="M12 5.38C13.62 5.38 15.06 5.94 16.2 7.03L19.34 3.89C17.45 2.13 14.97 1.05 12 1.05C7.7 1.05 4.04 3.45 2.24 6.99L5.92 9.84C6.78 7.27 9.17 5.38 12 5.38Z" fill="#EA4335"/>
+                </svg>
+                Sign up with Google
+            </a>
+        </div>
+
+        <div id="doctor-form" class="auth-form">
+            <h3 style="margin-bottom: 15px; text-align: left; font-size: 1.1rem;">Provider Login</h3>
+            <div class="input-box">
+                <label>Doctor Username</label>
+                <input type="text" id="doc-user" placeholder="Enter username">
+            </div>
+            <div class="input-box" style="margin-bottom: 15px;">
+                <label>Password</label>
+                <input type="password" id="doc-pass" placeholder="Enter password">
+            </div>
+            <button class="btn btn-primary"
+                style="width: 100%; margin-bottom: 10px; background: linear-gradient(135deg, #10b981 0%, #059669 100%);"
+                onclick="handleDocLogin()">Doctor Access</button>
+            <p style="font-size: 0.9rem;">Don't have an account? <a href="#" onclick="switchTab('doc_signup')" style="color: #2dd4bf;">Request Access</a></p>
+        </div>
+
+        <div id="doc-signup-form" class="auth-form">
+            <h3 style="margin-bottom: 15px; text-align: left; font-size: 1.1rem;">Request Provider Access</h3>
+            <div class="input-box" style="margin-bottom: 10px;">
+                <input type="text" id="ds-name" placeholder="Full Name (e.g., Dr. Smith)">
+            </div>
+            <div class="input-box" style="margin-bottom: 10px;">
+                <input type="text" id="ds-user" placeholder="Username">
+            </div>
+            <div class="input-box" style="margin-bottom: 10px;">
+                <input type="text" id="ds-spec" placeholder="Specialty (e.g., Endocrinologist)">
+            </div>
+            <div class="input-box" style="margin-bottom: 10px;">
+                <input type="text" id="ds-area" placeholder="Area / City">
+            </div>
+            <div class="input-box" style="margin-bottom: 10px;">
+                <input type="text" id="ds-pin" placeholder="Pincode/Zipcode">
+            </div>
+            <div class="input-box" style="margin-bottom: 15px;">
+                <input type="password" id="ds-pass" placeholder="Password">
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-bottom: 10px;" onclick="handleDocSignup()">Submit Request</button>
+            <p style="font-size: 0.9rem;"><a href="#" onclick="switchTab('doctor')" style="color: #2dd4bf;">Back to Login</a></p>
+        </div>
+
+        <div id="admin-form" class="auth-form">
+            <h3 style="margin-bottom: 15px; text-align: left; font-size: 1.1rem;">Admin Access</h3>
+            <div class="input-box">
+                <label>Admin Username</label>
+                <input type="text" id="admin-user" placeholder="Enter username">
+            </div>
+            <div class="input-box" style="margin-bottom: 25px;">
+                <label>Password</label>
+                <input type="password" id="admin-pass" placeholder="Enter password">
+            </div>
+            <button class="btn btn-primary"
+                style="width: 100%; background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);"
+                onclick="handleAdminLogin()">Admin Portal</button>
+        </div>
+
+        <p id="auth-msg" style="margin-top: 20px; font-size: 0.9rem; color: #f87171;"></p>
+    </div>
+
+    <script>
+        function switchTab(type) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+
+            if (type === 'login') {
+                document.querySelector('.tab:nth-child(1)').classList.add('active');
+                document.getElementById('login-form').classList.add('active');
+            } else if (type === 'signup') {
+                document.querySelector('.tab:nth-child(2)').classList.add('active');
+                document.getElementById('signup-form').classList.add('active');
+            } else if (type === 'doctor') {
+                document.querySelector('.tab:nth-child(3)').classList.add('active');
+                document.getElementById('doctor-form').classList.add('active');
+            } else if (type === 'admin') {
+                document.querySelector('.tab:nth-child(4)').classList.add('active');
+                document.getElementById('admin-form').classList.add('active');
+            } else if (type === 'doc_signup') {
+                document.querySelector('.tab:nth-child(3)').classList.add('active'); // keep doctor tab active
+                document.getElementById('doc-signup-form').classList.add('active');
+            }
+        }
+
+        async function handleLogin() {
+            const user = document.getElementById('login-user').value;
+            const pass = document.getElementById('login-pass').value;
+
+            try {
+                const res = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: user, password: pass })
+                });
+
+                const data = await res.json();
+                if (data.success) {
+                    window.location.href = '/';
+                } else {
+                    document.getElementById('auth-msg').innerText = data.message;
+                }
+            } catch (err) {
+                document.getElementById('auth-msg').innerText = "Server connection failed or returned an error.";
+            }
+        }
+
+        async function handleSignup() {
+            const fullname = document.getElementById('reg-name').value;
+            const user = document.getElementById('reg-user').value;
+            const email = document.getElementById('reg-email').value;
+            const phone = document.getElementById('reg-phone').value;
+            const pass = document.getElementById('reg-pass').value;
+
+            try {
+                const res = await fetch('/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        fullname: fullname,
+                        username: user,
+                        email: email,
+                        phone_number: phone,
+                        password: pass
+                    })
+                });
+
+                const data = await res.json();
+                if (data.success) {
+                    window.location.href = '/';
+                } else {
+                    document.getElementById('auth-msg').innerText = data.message;
+                }
+            } catch (err) {
+                document.getElementById('auth-msg').innerText = "An error occurred during sign up. Please try again.";
+            }
+        }
+
+        async function handleDocLogin() {
+            const user = document.getElementById('doc-user').value;
+            const pass = document.getElementById('doc-pass').value;
+
+            try {
+                const res = await fetch('/doctor_login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: user, password: pass })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    window.location.href = '/doctor_dashboard';
+                } else {
+                    document.getElementById('auth-msg').innerText = data.message || 'Doctor login failed.';
+                }
+            } catch (err) {
+                document.getElementById('auth-msg').innerText = 'Network error while logging in.';
+            }
+        }
+    </script>
+</body>
+
+</html>

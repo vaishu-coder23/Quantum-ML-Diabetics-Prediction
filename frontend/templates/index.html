@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Health AI | Patient Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(45, 212, 191, 0.15);
+            --primary-gradient: linear-gradient(135deg, #2dd4bf 0%, #38bdf8 100%);
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f8fafc;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Blurred background with original light feel */
+        .page-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1576091160550-217359f47f60?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+            filter: blur(20px) opacity(0.3);
+            z-index: -1;
+            transform: scale(1.1);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .sidebar {
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-right: 1px solid var(--glass-border);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar h2 {
+            color: white;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 30px;
+        }
+
+        .nav-item {
+            padding: 12px 15px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(45, 212, 191, 0.05);
+            color: #0d9488;
+        }
+
+        .nav-item.active {
+            background: var(--primary-gradient);
+            color: white !important;
+            box-shadow: 0 4px 15px rgba(45, 212, 191, 0.3);
+        }
+
+        .main-stage {
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .module {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .module.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Fix chat background to be light again */
+        .chat-messages {
+            background: #f1f5f9;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50">
+    <div class="page-bg"></div>
+    <div class="dashboard-grid">
+        <aside class="sidebar" style="height: 100vh;">
+            <div style="padding-bottom: 30px;">
+                <h2
+                    style="font-weight: 800; font-size: 1.6rem; background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
+                    QuantumHealth</h2>
+            </div>
+
+            <nav style="flex: 1;">
+                <div class="nav-item active" onclick="showModule('predict')"><span>🧬</span> <span
+                        data-i18n="predict">Risk Prediction</span></div>
+                <div class="nav-item" onclick="showModule('analysis')"><span>🧪</span> <span data-i18n="analysis">Lab
+                        Analysis</span></div>
+                <div class="nav-item" onclick="showModule('reminders')"><span>⏰</span> <span
+                        data-i18n="reminders">Medical Log</span></div>
+                <div class="nav-item" onclick="showModule('chat')"><span>💬</span> <span data-i18n="chat">AI
+                        Advisor</span></div>
+                <div class="nav-item" onclick="showModule('consult')"><span>👨‍⚕️</span> <span
+                        data-i18n="consult">Consultations</span></div>
+                <div class="nav-item" onclick="showModule('analytics')"><span>📈</span> <span
+                        data-i18n="analytics">Analytics</span></div>
+                <div class="nav-item" onclick="showModule('profile')"><span>👤</span> <span data-i18n="profile">My
+                        Profile</span></div>
+            </nav>
+
+            <div class="settings" style="margin-top: auto;">
+                <a href="/logout" class="nav-item"
+                    style="text-decoration: none; color: #f87171;"><span>Logout</span></a>
+            </div>
+        </aside>
+
+        <main class="main-stage">
+            <header class="page-header">
+                <h1 id="module-title" data-i18n="predict">Risk Prediction</h1>
+                <div style="display:flex; gap:15px; align-items:center;">
+                    <select id="langSelect" onchange="setLanguage(this.value)"
+                        style="padding: 6px 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: white; color: var(--text-main); font-size: 0.85em;">
+                        <option value="en">English</option>
+                        <option value="hi">हिंदी (Hindi)</option>
+                        <option value="te">తెలుగు (Telugu)</option>
+                        <option value="ta">தமிழ் (Tamil)</option>
+                    </select>
+                    <div class="user-chip">
+                        <div
+                            style="width: 32px; height: 32px; background: var(--primary-gradient); border-radius: 50%;">
+                        </div>
+                        <span>{{ session['username'] }}</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- the rest of the page is identical to templates/index.html -->
+            {% include '../../templates/index.html' %}
+    </div>
+    </main>
+    </div>
+    </div>
+
+    <!-- Logic handled in main.js -->
+    <script src="/static/js/main.js"></script>
+</body>
+
+</html>
